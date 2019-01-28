@@ -1,0 +1,23 @@
+server:
+  port: 8081
+  servlet.context-path: /api
+
+spring.application.name: consumer-blue
+
+info:
+  app:
+    name: Consumer Blue
+    protocol: http
+    description: 'This is the Pact workshop demo'
+  version: 1.0.0
+  contact:
+    author: Waterstrong
+    email: shuiqianglin@gmail.com
+
+decision:
+  service:
+    name: Decision Service
+    baseUrl: http://localhost:8081/decision
+    username: username
+    password: '******'
+    timeout: 5000

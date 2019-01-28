@@ -1,0 +1,2 @@
+rootProject.name = 'pact-workshop'
+include 'consumer-blue'
