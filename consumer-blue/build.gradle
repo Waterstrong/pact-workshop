@@ -1,4 +1,5 @@
 plugins {
+    // TODO: add the pact plugin
     id "au.com.dius.pact" version "3.6.1"
 }
 
@@ -8,13 +9,15 @@ dependencies {
     implementation 'io.springfox:springfox-swagger-ui:2.9.2'
     runtimeOnly 'org.springframework.boot:spring-boot-devtools'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    // TODO: add the pact consumer junit dependency
     testImplementation 'au.com.dius:pact-jvm-consumer-junit_2.12:3.6.1'
 }
 
+// TODO: add the pactPublish task
 pact {
     publish {
-        pactDirectory = 'consumer-blue/target/pacts'
-        pactBrokerUrl = 'http://localhost'
+        pactDirectory = './target/pacts'
+        pactBrokerUrl = 'http://pactuser:password@localhost'
     }
 
 }

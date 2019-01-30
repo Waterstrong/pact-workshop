@@ -9,6 +9,7 @@ build
 .gradle
 .idea
 .tmp
+target
 
 *.log
 *.cache

@@ -1,5 +1,5 @@
 server:
-  port: 8081
+  port: 8080
   servlet.context-path: /api
 
 spring.application.name: consumer-blue
@@ -15,9 +15,19 @@ info:
     email: shuiqianglin@gmail.com
 
 decision:
-  service:
+  api:
     name: Decision Service
-    baseUrl: http://localhost:8081/decision
+    baseUrl: http://localhost:8081/api
     username: username
     password: '******'
+    poolSize: 20
+    timeout: 5000
+
+address:
+  api:
+    name: Address Service
+    baseUrl: http://localhost:8082/api
+    username: username
+    password: '******'
+    poolSize: 20
     timeout: 5000
