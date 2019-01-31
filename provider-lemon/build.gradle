@@ -18,6 +18,7 @@ pact {
             protocol = 'http'
             host = 'localhost'
             port = 8082
+            path = '/api'
             hasPactsFromPactBroker('http://localhost', authentication: ['Basic', 'pactuser', 'password'])
         }
     }

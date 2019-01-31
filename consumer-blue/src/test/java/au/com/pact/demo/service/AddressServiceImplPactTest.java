@@ -42,6 +42,7 @@ public class AddressServiceImplPactTest {
                 .array("addresses")
                 .stringType("1304/7 Riverside Quay, VIC 3006")
                 .stringType("1305/8 Riverside Quay, VIC 3006")
+                .stringType("1306/9 Riverside Quay, VIC 3006")
                 .closeArray()
                 .asBody();
 
@@ -61,7 +62,7 @@ public class AddressServiceImplPactTest {
     @PactVerification(PROVIDER_LEMON)
     public void shouldSearchAddressesGivenAddressKeyword() {
         AddressResponse addressResponse = addressService.searchAddresses("13 Riverside");
-        assertThat(addressResponse.getAddresses(), hasSize(2));
+        assertThat(addressResponse.getAddresses(), hasSize(3));
         assertThat(addressResponse.getAddresses().get(0), is("1304/7 Riverside Quay, VIC 3006"));
     }
 

@@ -208,7 +208,7 @@ The username and password are `readonly:password`(developer readonly) and `pactu
    
 ---
 ### Build Pact Provider
-##### Option1: Pact JVM Provider Gradle 
+##### Option 1: Pact JVM Provider Gradle 
 1. Add Pact plugin in `provider-lemon/build.gradle` file:
    ```
    plugins {
@@ -223,18 +223,29 @@ The username and password are `readonly:password`(developer readonly) and `pactu
 4. Define the pacts between consumers and providers
    ```
    pact {
-   	serviceProviders {
-   		provider_lemon {
-   		    protocol = 'http'
-        	host = 'localhost'
-        	port = 8082
-   			hasPactsFromPactBroker('http://localhost', authentication: ['Basic', 'pactuser', 'password'])
-   		}
-   	}
+       serviceProviders {
+           provider_lemon {
+               protocol = 'http'
+               host = 'localhost'
+               port = 8082
+               path = '/api'
+               hasPactsFromPactBroker('http://localhost', authentication: ['Basic', 'pactuser', 'password'])
+           }
+       }
    }
    ```
    Notes: More options(Local files, Runtime, S3 bucket, Pact Broker) to verify pact files, refer to page [pact-jvm-provider-gradle](https://github.com/DiUS/pact-jvm/tree/master/pact-jvm-provider-gradle). 
-5. Run pact verify for provider
+5. Run pact verify for provider 
    ```
    ./gradlew :provider-lemon:pactVerify
    ```
+   ![](images/verify-provider.png)
+
+#### More options: Refer to Pact Docs
+[https://docs.pact.io](https://docs.pact.io/implementation_guides)
+
+#### Practice more
+1. Define Provider state
+2. Verify Provider from CLI 
+3. Try heart beat and badge endpoint
+4. Define Pact file version

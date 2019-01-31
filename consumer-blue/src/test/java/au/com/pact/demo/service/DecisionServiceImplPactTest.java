@@ -37,27 +37,28 @@ public class DecisionServiceImplPactTest {
 
     // TODO: Create Decision Pact (Provider Apple <--> Consumer Blue)
     @Pact(provider = PROVIDER_APPLE, consumer = CONSUMER_BLUE)
-    public RequestResponsePact createDecisionPact(PactDslWithProvider builder) {
-        PactDslJsonBody expectedResponse = new PactDslJsonBody()
+    public RequestResponsePact createRejectedDecisionPact(PactDslWithProvider builder) {
+        PactDslJsonBody rejectedResponse = new PactDslJsonBody()
                 .stringType("decision", "Rejected")
                 .stringType("policyRule", "PR-8")
                 .stringType("credRule", "CR-6")
                 .booleanType("flag", true)
                 .asBody();
 
-        PactDslJsonBody request = new PactDslJsonBody()
+        PactDslJsonBody rejectedRequest = new PactDslJsonBody()
                 .stringType("profileId")
                 .stringValue("transaction", "no")
                 .asBody();
 
         return builder
+                .given("Test Rejected")
                 .uponReceiving("Process Decision")
                 .path("/decision")
-                .body(request)
+                .body(rejectedRequest)
                 .method("POST")
                 .willRespondWith()
                 .status(200)
-                .body(expectedResponse)
+                .body(rejectedResponse)
                 .toPact();
     }
 

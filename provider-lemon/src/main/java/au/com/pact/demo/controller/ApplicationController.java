@@ -19,7 +19,7 @@ public class ApplicationController {
     public ResponseEntity<Addresses> retrieveAddresses(@RequestParam("keyword") String keyword) {
         Addresses addresses = new Addresses();
         if (keyword.startsWith("13")) {
-            addresses.setAddress(asList("1304/7 Riverside Quay, VIC 3006", "2305/8 Riverside Quay, VIC 3006", "3306/9 Riverside Quay, VIC 3006"));
+            addresses.setAddresses(asList("1304/7 Riverside Quay, VIC 3006", "1305/8 Riverside Quay, VIC 3006", "1306/9 Riverside Quay, VIC 3006"));
         }
 
         return new ResponseEntity<>(addresses, OK);

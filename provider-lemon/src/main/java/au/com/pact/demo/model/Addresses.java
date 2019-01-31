@@ -9,13 +9,13 @@ import static com.fasterxml.jackson.annotation.JsonInclude.Include.NON_NULL;
 
 @JsonInclude(NON_NULL)
 public class Addresses {
-    private List<String> address = new ArrayList<>();
+    private List<String> addresses = new ArrayList<>();
 
-    public List<String> getAddress() {
-        return address;
+    public List<String> getAddresses() {
+        return addresses;
     }
 
-    public void setAddress(List<String> address) {
-        this.address = address;
+    public void setAddresses(List<String> addresses) {
+        this.addresses = addresses;
     }
 }
