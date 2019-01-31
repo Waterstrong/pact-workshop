@@ -1,15 +1,41 @@
 # pact-workshop
 
+
 ### Get Started
 
-1. Clone the project into your local
-2. Open terminal and cd to project directory, run `./gradlew cI idea`
+1. Clone the project into your local:
+   ```
+   git clone https://github.com/Waterstrong/pact-workshop.git
+   ```
+2. Open terminal and cd to project directory, run command: 
+   ```
+   cd pact-workshop && ./gradlew cI idea
+   ```
 3. Open `pact-workshop.ipr` file with `IntelliJ IDEA`
-4. Run Consumer Blue: type command `./gradlew :consumer-blue:bootRun` in terminal
-5. Run Consumer Apple: type command `cd provider-apple; java -jar wiremock-standalone-*.jar --port 8081` in terminal
-6. Run Provider Lemon: type command `./gradlew :provider-lemon:bootRun` in terminals
-7. Start Continuous Build: type command `./gradlew build --continuous` in terminals
-8. Click and open [localhost swagger](http://localhost:9000/api/swagger-ui.html) in your browser and hint the endpoint
+   ```
+   idea pact-workshop.ipr || open pact-workshop.ipr || start pact-workshop.ipr
+   ```
+4. Start Consumer Blue, run command in terminal 1: 
+   ```
+   ./gradlew :consumer-blue:bootRun
+   ```
+5. Start Provider Apple, run command in terminal 2:
+   ```
+   cd provider-apple && java -jar wiremock-standalone-*.jar --port 8081
+   ```
+6. Start Provider Lemon, run command in terminal 3:
+   ```
+   ./gradlew :provider-lemon:bootRun
+   ```
+7. Start Continuous Build, run command in terminal 4:
+   ```
+   ./gradlew build --continuous
+   ```
+8. Click and open [localhost swagger page](http://localhost:9000/api/swagger-ui.html) in your browser and try it out
+   * Search Addresses -> Path parameter `keyword` starts with `13` or not will get different results.
+   * Check Application -> Request payload `transaction` value `yes` or `no` will get different response.
+   ![](images/swagger-ui.png)
+   
 
 ### Pact Consumer
 
