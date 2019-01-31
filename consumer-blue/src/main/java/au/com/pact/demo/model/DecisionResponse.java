@@ -1,5 +1,9 @@
 package au.com.pact.demo.model;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
+
+@JsonInclude(Include.NON_NULL)
 public class DecisionResponse {
     private String decision;
     private String policyRule;

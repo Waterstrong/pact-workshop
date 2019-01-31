@@ -3,10 +3,13 @@
 ### Get Started
 
 1. Clone the project into your local
-2. Open terminal and cd to project directory, run `./gradlew idea`
+2. Open terminal and cd to project directory, run `./gradlew cI idea`
 3. Open `pact-workshop.ipr` file with `IntelliJ IDEA`
-4. Type command `./gradlew bootRun` and `./gradlew build --continuous` in separate terminals
-5. Open [http://localhost:8081/api/swagger-ui.html](http://localhost:8081/api/swagger-ui.html) in your browser
+4. Run Consumer Blue: type command `./gradlew :consumer-blue:bootRun` in terminal
+5. Run Consumer Apple: type command `java -jar ...` in terminal
+6. Run Provider Lemon: type command `./gradlew :provider-lemon:bootRun` in terminals
+7. Start Continuous Build: type command `./gradlew build --continuous` in terminals
+8. Open [http://localhost:8081/api/swagger-ui.html](http://localhost:8081/api/swagger-ui.html) in your browser and hint the endpoint
 
 ### Pact Consumer
 

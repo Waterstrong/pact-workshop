@@ -1,5 +1,8 @@
 package au.com.pact.demo.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class DecisionRequest {
     private String profileId;
     private String transaction;

@@ -6,9 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
-import static java.nio.charset.Charset.defaultCharset;
-import static org.apache.catalina.util.URLEncoder.DEFAULT;
-
 @Service
 public class AddressServiceImpl implements AddressService {
     @Autowired
@@ -17,7 +14,7 @@ public class AddressServiceImpl implements AddressService {
 
     @Override
     public AddressResponse searchAddresses(String keyword) {
-        String pathParameters = "/addresses?keyword=" + DEFAULT.encode(keyword, defaultCharset());
+        String pathParameters = "/addresses?keyword=" + keyword;
 
         return restTemplate.getForObject(pathParameters, AddressResponse.class);
     }

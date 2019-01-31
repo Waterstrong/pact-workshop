@@ -21,6 +21,7 @@ public class RestTemplateExecutor {
     }
 
     public <T> T getForObject(String pathParameters, Class<T> responseType) {
+
         String url = fromPath(URL_TEMPLATE).buildAndExpand(endpointProperties.getBaseUrl(), pathParameters).toString();
 
         return restTemplate.getForObject(url, responseType);
