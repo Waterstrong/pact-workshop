@@ -8,14 +8,12 @@ import au.com.dius.pact.consumer.dsl.PactDslWithProvider;
 import au.com.dius.pact.model.RequestResponsePact;
 import au.com.pact.demo.model.AddressResponse;
 import au.com.pact.demo.util.RestTemplateExecutor;
-import groovy.json.JsonOutput;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Spy;
 import org.mockito.junit.MockitoJUnitRunner;
-import scala.util.parsing.json.JSON;
 
 import static au.com.pact.demo.constant.DefaultValues.CONSUMER_BLUE;
 import static au.com.pact.demo.constant.DefaultValues.PROVIDER_LEMON;
