@@ -6,7 +6,7 @@
 2. Open terminal and cd to project directory, run `./gradlew cI idea`
 3. Open `pact-workshop.ipr` file with `IntelliJ IDEA`
 4. Run Consumer Blue: type command `./gradlew :consumer-blue:bootRun` in terminal
-5. Run Consumer Apple: type command `java -jar ...` in terminal
+5. Run Consumer Apple: type command `java -jar wiremock-standalone-*.jar --port 8081` in terminal
 6. Run Provider Lemon: type command `./gradlew :provider-lemon:bootRun` in terminals
 7. Start Continuous Build: type command `./gradlew build --continuous` in terminals
 8. Open [http://localhost:8081/api/swagger-ui.html](http://localhost:8081/api/swagger-ui.html) in your browser and hint the endpoint
