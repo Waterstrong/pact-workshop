@@ -24,7 +24,7 @@ public class ApplicationController {
     @Autowired
     private AddressService addressService;
 
-    @GetMapping(value = "/application", consumes = CONTENT_TYPE, produces = CONTENT_TYPE)
+    @PostMapping(value = "/application", consumes = CONTENT_TYPE, produces = CONTENT_TYPE)
     @ResponseStatus(HttpStatus.OK)
     @ApiOperation(value = "Check Application", notes = "This is check application endpoint.", consumes = CONTENT_TYPE, produces = CONTENT_TYPE)
     public ResponseEntity<DecisionResponse> checkApplication(@RequestBody DecisionRequest request) {

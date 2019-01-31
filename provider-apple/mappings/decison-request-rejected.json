@@ -2,6 +2,11 @@
     "request": {
         "method": "POST",
         "url": "/api/decision",
+        "headers": {
+            "Content-Type": {
+                "equalTo": "application/json"
+            }
+        },
         "bodyPatterns": [
             {
                 "matchesJsonPath": {
@@ -13,6 +18,9 @@
     },
     "response": {
         "status": 200,
+        "headers": {
+            "Content-Type": "application/json"
+        },
         "bodyFileName": "decision-response-rejected.json"
     }
 }
