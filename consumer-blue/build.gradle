@@ -14,10 +14,3 @@ dependencies {
 }
 
 // TODO: add pactPublish task
-pact {
-    publish {
-        pactDirectory = './target/pacts'
-        pactBrokerUrl = 'http://pactuser:password@localhost'
-    }
-
-}

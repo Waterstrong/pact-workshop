@@ -12,14 +12,3 @@ dependencies {
 }
 
 // TODO: Define the pacts between consumers and providers
-pact {
-    serviceProviders {
-        provider_lemon {
-            protocol = 'http'
-            host = 'localhost'
-            port = 8082
-            path = '/api'
-            hasPactsFromPactBroker('http://localhost', authentication: ['Basic', 'pactuser', 'password'])
-        }
-    }
-}
