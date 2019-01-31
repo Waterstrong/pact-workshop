@@ -1,7 +1,6 @@
 # pact-workshop
 ![](images/consumer-relationship.png)
 
-----
 ### Get Started
 
 1. Clone the project into your local:
@@ -10,7 +9,7 @@
    ```
 2. Open terminal and cd to project directory, run command: 
    ```
-   cd pact-workshop && ./gradlew idea
+   cd pact-workshop; ./gradlew idea
    ```
 3. Open `pact-workshop.ipr` file with `IntelliJ IDEA`
    ```
@@ -23,7 +22,7 @@
    Debug mode parameter: `--debug-jvm`.
 5. Start Provider Apple, run command in terminal 2:
    ```
-   cd provider-apple && java -jar wiremock-standalone-*.jar --port 8081
+   cd provider-apple; java -jar wiremock-standalone-*.jar --port 8081 --verbose
    ```
 6. Start Provider Lemon, run command in terminal 3:
    ```
@@ -162,7 +161,9 @@
    ```
 
 ----
-### Build Pact Broker and publish Pact files
+### Setup Pact Broker and publish Pact files
+
+** How to setup Pact Broker service ?**
 
 There are few options to setup Pact Broker: e.g. [Hosted Pact Broker](http://pact.dius.com.au/), [Pact Broker with Ruby](pact-broker-ruby/README.md), [Terraform on AWS](https://github.com/nadnerb/terraform-pact-broker), [Pact Broker Openshift](https://github.com/jaimeniswonger/pact-broker-openshift) and [Pact Broker Docker container](https://hub.docker.com/r/dius/pact-broker/). Choose one of the options to try.
 
@@ -172,7 +173,7 @@ If your team is using AWS, the Dockerised Pact Broker with AWS RDS Postgres data
 
 For this workshop demo, the [docker-compose.yml](pact-broker/docker-compose.yml) is ready for quick start-up.
 ```
-cd pact-broker && docker-compose up
+cd pact-broker; docker-compose up
 ```
 
 Check if Pact Broker service is up running at both `http` and `https` protocols: [http://localhost/](http://localhost/), [https://localhost:8443/](https://localhost:8443/). 
@@ -187,7 +188,7 @@ The username and password are `readonly:password`(developer readonly) and `pactu
        id "au.com.dius.pact" version "3.6.1"
    }
    ``` 
-2. Add gradle task `pactPublish` in the same gradle file with auth info (using http as demo here):
+2. Add Gradle task `pactPublish` in the same gradle file with auth info (using http as demo here):
    ```
    pact {
        publish {
@@ -203,5 +204,37 @@ The username and password are `readonly:password`(developer readonly) and `pactu
    ./gradlew :consumer-blue:pactPublish
    ```
 4. Refresh the Pact Broker endpoint and see the Pact file with versions and relationships:
-
+   ![](images/pact-files.png)
+   
+---
 ### Build Pact Provider
+##### Option1: Pact JVM Provider Gradle 
+1. Add Pact plugin in `provider-lemon/build.gradle` file:
+   ```
+   plugins {
+       id "au.com.dius.pact" version "3.6.1"
+   }
+   ```
+2. Add Pact jvm provider dependency
+   ```
+   testImplementation 'au.com.dius:pact-jvm-provider_2.12:3.6.1'
+   ```
+3. Run `./gradlew idea` to download the latest dependencies.
+4. Define the pacts between consumers and providers
+   ```
+   pact {
+   	serviceProviders {
+   		provider_lemon {
+   		    protocol = 'http'
+        	host = 'localhost'
+        	port = 8082
+   			hasPactsFromPactBroker('http://localhost', authentication: ['Basic', 'pactuser', 'password'])
+   		}
+   	}
+   }
+   ```
+   Notes: More options(Local files, Runtime, S3 bucket, Pact Broker) to verify pact files, refer to page [pact-jvm-provider-gradle](https://github.com/DiUS/pact-jvm/tree/master/pact-jvm-provider-gradle). 
+5. Run pact verify for provider
+   ```
+   ./gradlew :provider-lemon:pactVerify
+   ```

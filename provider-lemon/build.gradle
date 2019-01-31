@@ -1,5 +1,24 @@
+// TODO: add pact plugin
+plugins {
+    id "au.com.dius.pact" version "3.6.1"
+}
+
 dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-web'
     runtimeOnly 'org.springframework.boot:spring-boot-devtools'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    // TODO: add pact jvm provider dependency
+    testImplementation 'au.com.dius:pact-jvm-provider_2.12:3.6.1'
+}
+
+// TODO: Define the pacts between consumers and providers
+pact {
+    serviceProviders {
+        provider_lemon {
+            protocol = 'http'
+            host = 'localhost'
+            port = 8082
+            hasPactsFromPactBroker('http://localhost', authentication: ['Basic', 'pactuser', 'password'])
+        }
+    }
 }
