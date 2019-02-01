@@ -1,5 +1,6 @@
 {
   "decision": "Rejected",
   "policyRule": "PR-8",
-  "credRule": "CR-6"
+  "credRule": "CR-6",
+  "flag": true
 }

@@ -204,7 +204,7 @@ The username and password are `readonly:password`(developer readonly) and `pactu
    ./gradlew :consumer-blue:pactPublish
    ```
 4. Refresh the Pact Broker endpoint and see the Pact file with versions and relationships:
-   ![](images/pact-files.png)
+   ![](images/pact-home-without-version.png)
    
 ---
 ### Build Pact Provider
@@ -239,13 +239,65 @@ The username and password are `readonly:password`(developer readonly) and `pactu
    ```
    ./gradlew :provider-lemon:pactVerify
    ```
-   ![](images/verify-provider.png)
+   ![](images/verify-provider-lemon.png)
+6. As you will get the warning message `Skipping publishing of verification results as it has been disabled (pact.verifier.publishResults is not 'true')`.
+   To fix it by adding the gradle parameter `-Ppact.verifier.publishResults=true` or add `pact.verifier.publishResults=true` in `gradle.properties`. 
+   Then it will update the verify status in Pact Broker.
 
-#### More options: Refer to Pact Docs
-[https://docs.pact.io](https://docs.pact.io/implementation_guides)
+##### Option 2: Pact Provider Verification
+[Pact Provider Verification](https://github.com/pact-foundation/pact-provider-verifier) - This setup simplifies Pact Provider verification process in any language, wrapping the Ruby implementation into a cross-platform, binary-like CLI tool.
 
-#### Practice more
+1. Make sure the Provider Apple Wiremock service is running. To refresh the wiremock mapping data by running command:
+   ```
+   curl -X POST http://localhost:8081/__admin/mappings/reset --verbose
+   ``` 
+2. Install Ruby, then install `pact-provider-verifier` CLI:
+   ```
+   gem install pact-provider-verifier
+   ```
+3. Run the following command to verify Provider Apple:
+   ```
+   pact-provider-verifier --pact-broker-base-url=http://localhost --broker-username=pactuser --broker-password=password --provider-base-url=http://localhost:8081/api --provider=provider_apple --provider-app-version=0.0.1 --publish-verification-results=true --verbose
+   ```
+   ![](images/verify-provider-apple.png)
+   ![](images/pact-interactions-verified.png)
+
+##### More options
+* [Pact Docs](https://docs.pact.io/implementation_guides)
+* [Verifying Pacts](https://docs.pact.io/implementation_guides/ruby/verifying_pacts)
+* [Pact Provider Verification in Docker](https://github.com/DiUS/pact-provider-verifier-docker)
+
+
+---
+### More tips
 1. Define Provider state
-2. Verify Provider from CLI 
-3. Try heart beat and badge endpoint
-4. Define Pact file version
+
+2. Try heart beat and badge endpoint
+   ```
+   http://localhost/diagnostic/status/heartbeat
+   https://localhost:8443/diagnostic/status/heartbeat
+   
+   http://localhost/pacts/provider/provider_lemon/consumer/consumer_blue/latest/badge.svg
+   https://localhost:8443/pacts/provider/provider_lemon/consumer/consumer_blue/latest/badge.svg
+   ```
+   ![](images/pact-badge.png)
+3. Define Pact file version
+   ```
+   version = "1.0.0"  // In xxx/build.gradle 
+   // or
+   project.version = "1.0.0"  // In pact.serviceProviders.providerXXX {  }  
+   ```
+   ![](images/pact-home-with-version.png)
+   ![](images/pact-consumer-provider-versions.png)
+
+
+---
+### More Readings
+* [Pact Docs](https://docs.pact.io/) 
+* [Closing the loop with Pact verifications](https://dius.com.au/2018/01/21/closing-the-loop-with-pact-verifications/)
+* [Trust but verify. Using Pact for contract testing](https://devblog.xero.com/trust-but-verify-using-pact-for-contract-testing-495a1e303a6)
+* [Advanced Contract Testing - Pact Verification with Pattern Matching](https://blog.risingstack.com/advanced-contract-testing-pact-verification-with-pattern-matching/)
+* [Consumer Driven Contract Tests](https://www.bbva.com/en/consumer-driven-contract-tests/) 
+* [Contract Tests vs Functional Tests](https://docs.pact.io/best_practices/consumer/contract_tests_not_functional_tests)
+* [Consumer-Driven Contracts: A Service Evolution Pattern](https://martinfowler.com/articles/consumerDrivenContracts.html) 
+* [Understanding Contract Testing for Microservices](https://www.mabl.com/blog/understanding-contract-testing-microservices-mabl)

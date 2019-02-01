@@ -13,6 +13,8 @@ dependencies {
     testImplementation 'au.com.dius:pact-jvm-consumer-junit_2.12:3.6.1'
 }
 
+version = '0.0.2'
+
 // TODO: add pactPublish task
 pact {
     publish {
