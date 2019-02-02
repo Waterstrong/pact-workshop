@@ -1,5 +1,6 @@
 # pact-workshop
 ![](images/consumer-relationship.png)
+![](images/pact-home-with-version.png)
 
 ### Get Started
 
@@ -118,7 +119,8 @@
                        "header": { ...}
                    },
                    ...
-               }
+               },
+               "providerStates": [ ... ]
            }
        ],
        "metadata": { ... }
@@ -257,12 +259,12 @@ The username and password are `readonly:password`(developer readonly) and `pactu
    ```
 3. Run the following command to verify Provider Apple:
    ```
-   pact-provider-verifier --pact-broker-base-url=http://localhost --broker-username=pactuser --broker-password=password --provider-base-url=http://localhost:8081/api --provider=provider_apple --provider-app-version=0.0.1 --publish-verification-results=true --verbose
+   pact-provider-verifier --pact-broker-base-url=http://localhost --broker-username=pactuser --broker-password=password --provider-base-url=http://localhost:8081/api --provider=provider_apple --provider-app-version=1.0.0 --publish-verification-results=true --verbose
    ```
    ![](images/verify-provider-apple.png)
    ![](images/pact-interactions-verified.png)
 
-##### More options
+##### Options 3, 4, 5...
 * [Pact Docs](https://docs.pact.io/implementation_guides)
 * [Verifying Pacts](https://docs.pact.io/implementation_guides/ruby/verifying_pacts)
 * [Pact Provider Verification in Docker](https://github.com/DiUS/pact-provider-verifier-docker)
@@ -270,9 +272,12 @@ The username and password are `readonly:password`(developer readonly) and `pactu
 
 ---
 ### More tips
-1. Define Provider state
-
-2. Try heart beat and badge endpoint
+1. Define Provider state using `.given()`
+   * [AddressServiceImplPactTest.java](https://github.com/Waterstrong/pact-workshop/blob/completed/consumer-blue/src/test/java/au/com/pact/demo/service/AddressServiceImplPactTest.java)
+   * [DecisionServiceImplPactTest.java](https://github.com/Waterstrong/pact-workshop/blob/completed/consumer-blue/src/test/java/au/com/pact/demo/service/DecisionServiceImplPactTest.java)
+2. Verify the provider with unit test
+   * [Pact junit runner](https://github.com/DiUS/pact-jvm/tree/master/pact-jvm-provider-junit#download-pacts-from-a-pact-broker) - Library provides ability to play contract tests against a provider service in JUnit fashionable way.
+3. Try heart beat and badge endpoint
    ```
    http://localhost/diagnostic/status/heartbeat
    https://localhost:8443/diagnostic/status/heartbeat
@@ -281,21 +286,31 @@ The username and password are `readonly:password`(developer readonly) and `pactu
    https://localhost:8443/pacts/provider/provider_lemon/consumer/consumer_blue/latest/badge.svg
    ```
    ![](images/pact-badge.png)
-3. Define Pact file version
+4. Define Pact file version
    ```
-   version = "1.0.0"  // In xxx/build.gradle 
-   // or
-   project.version = "1.0.0"  // In pact.serviceProviders.providerXXX {  }  
+   version = "1.0.0"  // In xxx/build.gradle or within pact block. It will use version of the gradle project by default.   
    ```
-   ![](images/pact-home-with-version.png)
    ![](images/pact-consumer-provider-versions.png)
+4. Stay on `master` branch to practice workshop step by step with instructions. Switch to `completed` branch to get completed code demo.
+5. Feel free to ask questions, share thoughts and give feedback :)
 
+---
+### Self-reflection Questions
+- [ ] Can I explain the CDC(Consumer Driven Contract Testing) ? 
+- [ ] Can I explain the differences between contract test and functional test ?
+- [ ] Do I know one or two tools for contract testing ?
+- [ ] Do I know how to write script to generate Pact file?
+- [ ] Do I know how to verify provider in Pact ?
+- [ ] Do I know what is Pact Broker ?
+- [ ] Do I know how to publish the Pact file ?
+- [ ] Do I know the best practices for Contract Testing?
 
 ---
 ### More Readings
-* [Pact Docs](https://docs.pact.io/) 
+* [Pact Docs - docs.pact.io](https://docs.pact.io/) 
 * [Closing the loop with Pact verifications](https://dius.com.au/2018/01/21/closing-the-loop-with-pact-verifications/)
 * [Trust but verify. Using Pact for contract testing](https://devblog.xero.com/trust-but-verify-using-pact-for-contract-testing-495a1e303a6)
+* [Consumer-Driven Contracts using a Pact broker](https://medium.com/techbeatscorner/consumer-driven-contracts-using-a-pact-broker-b1743c2f8fe5)
 * [Advanced Contract Testing - Pact Verification with Pattern Matching](https://blog.risingstack.com/advanced-contract-testing-pact-verification-with-pattern-matching/)
 * [Consumer Driven Contract Tests](https://www.bbva.com/en/consumer-driven-contract-tests/) 
 * [Contract Tests vs Functional Tests](https://docs.pact.io/best_practices/consumer/contract_tests_not_functional_tests)

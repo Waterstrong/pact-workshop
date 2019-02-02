@@ -18,8 +18,11 @@ version = '0.0.2'
 // TODO: add pactPublish task
 pact {
     publish {
+        version = '1.0.0'  // define version here to override version
         pactDirectory = './target/pacts'
         pactBrokerUrl = 'http://pactuser:password@localhost'
+//        pactBrokerUsername = 'xxx'
+//        pactBrokerPassword = 'xxx'
     }
 
 }

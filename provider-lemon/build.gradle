@@ -17,11 +17,14 @@ version = '0.0.3'
 pact {
     serviceProviders {
         provider_lemon {
+            version = '1.0.0'  // define version here to override version
             protocol = 'http'
             host = 'localhost'
             port = 8082
             path = '/api'
             hasPactsFromPactBroker('http://localhost', authentication: ['Basic', 'pactuser', 'password'])
+//            pactBrokerUser and pactBrokerPassword can be defined in the gradle.properties
+//            hasPactsFromPactBroker('http://localhost', authentication: ['Basic', pactBrokerUser, pactBrokerPassword])
         }
     }
 }

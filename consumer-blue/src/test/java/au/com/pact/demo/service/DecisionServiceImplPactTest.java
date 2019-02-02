@@ -16,9 +16,9 @@ import org.mockito.InjectMocks;
 import org.mockito.Spy;
 import org.mockito.junit.MockitoJUnitRunner;
 
-import static au.com.pact.demo.constant.DefaultValues.CONSUMER_BLUE;
-import static au.com.pact.demo.constant.DefaultValues.PROVIDER_APPLE;
+import static au.com.pact.demo.constant.DefaultValues.*;
 import static au.com.pact.demo.util.RestTemplateExecutorBuilder.buildRestTemplate;
+import static com.google.common.collect.ImmutableMap.of;
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
 
@@ -38,33 +38,38 @@ public class DecisionServiceImplPactTest {
     // TODO: Create Decision Pact (Provider Apple <--> Consumer Blue)
     @Pact(provider = PROVIDER_APPLE, consumer = CONSUMER_BLUE)
     public RequestResponsePact createRejectedDecisionPact(PactDslWithProvider builder) {
-        PactDslJsonBody rejectedResponse = new PactDslJsonBody()
-                .stringType("decision", "Rejected")
-                .stringType("policyRule", "PR-8")
-                .stringType("credRule", "CR-6")
-                .booleanType("flag", true)
-                .asBody();
-
-        PactDslJsonBody rejectedRequest = new PactDslJsonBody()
-                .stringType("profileId")
-                .stringValue("transaction", "no")
-                .asBody();
-
         return builder
-                .given("Test Rejected")
+                .given("Transaction No")
                 .uponReceiving("Process Decision")
                 .path("/decision")
-                .body(rejectedRequest)
                 .method("POST")
+                .body(newRejectedRequest())
                 .willRespondWith()
                 .status(200)
-                .body(rejectedResponse)
+                .headers(of("Content-Type", CONTENT_TYPE))
+                .body(newRejectedResponse())
+                .toPact();
+    }
+
+    @Pact(provider = PROVIDER_APPLE, consumer = CONSUMER_BLUE)
+    public RequestResponsePact createApprovedDecisionPact(PactDslWithProvider builder) {
+        return builder
+                .given("Transaction Yes")
+                .uponReceiving("Process Decision")
+                .path("/decision")
+                .method("POST")
+                .headers(of("Content-Type", CONTENT_TYPE))
+                .body(newApprovedRequest())
+                .willRespondWith()
+                .status(200)
+                .headers(of("Content-Type", CONTENT_TYPE))
+                .body(newApprovedResponse())
                 .toPact();
     }
 
     // TODO: Create Pact Test for Provider Apple
     @Test
-    @PactVerification(PROVIDER_APPLE)
+    @PactVerification(value = PROVIDER_APPLE, fragment = "createRejectedDecisionPact")
     public void shouldProcessDecisionToReturnRejectedGivenDecisionRequestTransactionNo() {
         DecisionRequest request = new DecisionRequest();
         request.setProfileId("id12345");
@@ -77,4 +82,47 @@ public class DecisionServiceImplPactTest {
         assertThat(response.getCredRule(), is("CR-6"));
         assertThat(response.isFlag(), is(true));
     }
+
+    @Test
+    @PactVerification(value = PROVIDER_APPLE, fragment = "createApprovedDecisionPact")
+    public void shouldProcessDecisionToReturnApprovedGivenDecisionRequestTransactionYes() {
+        DecisionRequest request = new DecisionRequest();
+        request.setProfileId("id54321");
+        request.setTransaction("yes");
+
+        DecisionResponse response = decisionService.processDecision(request);
+
+        assertThat(response.getDecision(), is("Approved"));
+    }
+
+    private PactDslJsonBody newApprovedRequest() {
+        return new PactDslJsonBody()
+                .stringType("profileId")
+                .stringValue("transaction", "yes")
+                .asBody();
+    }
+
+    private PactDslJsonBody newApprovedResponse() {
+        return new PactDslJsonBody()
+                .stringType("decision", "Approved")
+                .booleanType("flag", true)
+                .asBody();
+    }
+
+    private PactDslJsonBody newRejectedRequest() {
+        return new PactDslJsonBody()
+                .stringType("profileId")
+                .stringValue("transaction", "no")
+                .asBody();
+    }
+
+    private PactDslJsonBody newRejectedResponse() {
+        return new PactDslJsonBody()
+                .stringType("decision", "Rejected")
+                .stringType("policyRule", "PR-8")
+                .stringType("credRule", "CR-6")
+                .booleanType("flag", true)
+                .asBody();
+    }
+
 }

@@ -47,6 +47,7 @@ public class AddressServiceImplPactTest {
                 .asBody();
 
         return builder
+                .given("keyword start with 13")
                 .uponReceiving("Search Addresses")
                 .path("/addresses")
                 .query("keyword=13 Riverside")
@@ -54,6 +55,14 @@ public class AddressServiceImplPactTest {
                 .willRespondWith()
                 .status(200)
                 .body(expectedResponse)
+                .given("keyword not start with 13")
+                .uponReceiving("Search Addresses")
+                .path("/addresses")
+                .query("keyword=800 South")
+                .method("GET")
+                .willRespondWith()
+                .status(200)
+                .body(new PactDslJsonBody().array("addresses").closeArray().asBody())
                 .toPact();
     }
 
@@ -64,6 +73,9 @@ public class AddressServiceImplPactTest {
         AddressResponse addressResponse = addressService.searchAddresses("13 Riverside");
         assertThat(addressResponse.getAddresses(), hasSize(3));
         assertThat(addressResponse.getAddresses().get(0), is("1304/7 Riverside Quay, VIC 3006"));
+
+        // Note: must match both scenarios in one test
+        assertThat(addressService.searchAddresses("800 South").getAddresses(), hasSize(0));
     }
 
 }
