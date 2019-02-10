@@ -95,6 +95,7 @@ public class DecisionServiceImplPactTest {
         assertThat(response.getDecision(), is("Approved"));
     }
 
+    // TODO: load from json file if the request body is too large
     private PactDslJsonBody newApprovedRequest() {
         return new PactDslJsonBody()
                 .stringType("profileId")

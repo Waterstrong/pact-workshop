@@ -126,7 +126,12 @@
        "metadata": { ... }
    }
    ```
-   The Pact file directory can be changed by overriding `PACT_DIR="<new-directory>"` in `build.gradle` `ext{}` block.
+   The Pact file directory can be overwritten with the `pact.rootDir` system property. This property needs to be set on the test JVM as most build tools will fork a new JVM to run the tests.
+   ```
+   test {
+       systemProperties['pact.rootDir'] = "$buildDir/pacts"
+   }
+   ```
 
 7. Do one more example to practice with similar above steps in `AddressServiceImplPactTest.java`:
    ```
@@ -248,6 +253,7 @@ The username and password are `readonly:password`(developer readonly) and `pactu
 
 ##### Option 2: Pact Provider Verification
 [Pact Provider Verification](https://github.com/pact-foundation/pact-provider-verifier) - This setup simplifies Pact Provider verification process in any language, wrapping the Ruby implementation into a cross-platform, binary-like CLI tool.
+It seems that the CLI is not parsing matcher rules correctly. The pactVerify task can also be used on consumer side.
 
 1. Make sure the Provider Apple Wiremock service is running. To refresh the wiremock mapping data by running command:
    ```

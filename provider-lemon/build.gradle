@@ -1,6 +1,7 @@
 // TODO: add pact plugin
 plugins {
     id "au.com.dius.pact" version "3.6.1"
+    id "com.wiredforcode.spawn" version "0.8.2"
 }
 
 dependencies {
@@ -11,12 +12,24 @@ dependencies {
     testImplementation 'au.com.dius:pact-jvm-provider_2.12:3.6.1'
 }
 
-version = '0.0.3'
+version = '1.0.0'
+
+task startProvider(type: SpawnProcessTask, dependsOn: assemble) {
+    command "java -Dspring.profiles.active=test -jar ${jar.archivePath}"
+    ready 'Started Application'
+}
+
+task stopProvider(type: KillProcessTask) { }
 
 // TODO: Define the pacts between consumers and providers
 pact {
     serviceProviders {
         provider_lemon {
+//            isDependencyForPactVerify = true
+
+            startProviderTask = startProvider
+            terminateProviderTask = stopProvider
+
             version = '1.0.0'  // define version here to override version
             protocol = 'http'
             host = 'localhost'

@@ -19,10 +19,31 @@ version = '0.0.2'
 pact {
     publish {
         version = '1.0.0'  // define version here to override version
+//        tags = xxx
         pactDirectory = './target/pacts'
         pactBrokerUrl = 'http://pactuser:password@localhost'
 //        pactBrokerUsername = 'xxx'
 //        pactBrokerPassword = 'xxx'
     }
+    serviceProviders {
+        provider_apple {
+            // Normally a gradle task named pactVerify_${provider.name} is created and added as a task dependency for pactVerify.
+            // To disable this dependency on a provider by setting isDependencyForPactVerify to false (defaults to true).
+            isDependencyForPactVerify = false
 
+            version = '1.0.0'
+            protocol = 'http'
+            host = 'localhost'
+            port = 8081
+            path = '/api'
+
+//            requestFilter = { req ->
+//                // Add an authorization header to each request
+//                req.addHeader('Authorization', 'OAUTH eyJhbGciOiJSUzI1NiIsImN0eSI6ImFw...')
+//            }
+//            insecure = true // allow SSL with a self-signed cert, to enable insecure SSL mode by setting :insecure true
+
+            hasPactsFromPactBroker('http://localhost', authentication: ['Basic', 'pactuser', 'password'])
+        }
+    }
 }
