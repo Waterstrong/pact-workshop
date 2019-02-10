@@ -170,7 +170,7 @@
 ----
 ### Setup Pact Broker and publish Pact files
 
-** How to setup Pact Broker service ?**
+**How to setup Pact Broker service ?**
 
 There are few options to setup Pact Broker: e.g. [Hosted Pact Broker](http://pact.dius.com.au/), [Pact Broker with Ruby](pact-broker-ruby/README.md), [Terraform on AWS](https://github.com/nadnerb/terraform-pact-broker), [Pact Broker Openshift](https://github.com/jaimeniswonger/pact-broker-openshift) and [Pact Broker Docker container](https://hub.docker.com/r/dius/pact-broker/). Choose one of the options to try.
 
@@ -297,7 +297,7 @@ It seems that the CLI is not parsing matcher rules correctly. The pactVerify tas
    version = "1.0.0"  // In xxx/build.gradle or within pact block. It will use version of the gradle project by default.   
    ```
    ![](images/pact-consumer-provider-versions.png)
-4. Stay on `master` branch to practice workshop step by step with instructions. Switch to `completed` branch to get completed code demo.
+4. Stay on [`master` branch](https://github.com/Waterstrong/pact-workshop) to practice workshop step by step with instructions. Switch to [`completed` branch](https://github.com/Waterstrong/pact-workshop/tree/completed) to get completed code demo.
 5. Feel free to ask questions, share thoughts and give feedback :)
 
 ---

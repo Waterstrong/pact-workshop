@@ -35,9 +35,11 @@ pact {
             host = 'localhost'
             port = 8082
             path = '/api'
-            hasPactsFromPactBroker('http://localhost', authentication: ['Basic', 'pactuser', 'password'])
+            if (gradle.startParameter.taskNames.find { task -> task.contains('pactVerify') }) {
+                hasPactsFromPactBroker('http://localhost', authentication: ['Basic', 'pactuser', 'password'])
 //            pactBrokerUser and pactBrokerPassword can be defined in the gradle.properties
 //            hasPactsFromPactBroker('http://localhost', authentication: ['Basic', pactBrokerUser, pactBrokerPassword])
+            }
         }
     }
 }

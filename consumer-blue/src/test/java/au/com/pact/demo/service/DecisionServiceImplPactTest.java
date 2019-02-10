@@ -9,12 +9,16 @@ import au.com.dius.pact.model.RequestResponsePact;
 import au.com.pact.demo.model.DecisionRequest;
 import au.com.pact.demo.model.DecisionResponse;
 import au.com.pact.demo.util.RestTemplateExecutor;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Spy;
 import org.mockito.junit.MockitoJUnitRunner;
+import org.skyscreamer.jsonassert.JSONAssert;
+
+import java.io.FileInputStream;
 
 import static au.com.pact.demo.constant.DefaultValues.*;
 import static au.com.pact.demo.util.RestTemplateExecutorBuilder.buildRestTemplate;
@@ -81,6 +85,8 @@ public class DecisionServiceImplPactTest {
         assertThat(response.getPolicyRule(), is("PR-8"));
         assertThat(response.getCredRule(), is("CR-6"));
         assertThat(response.isFlag(), is(true));
+
+        // JSONAssert.assertEquals(); // Use JSONAssert, ObjectMapper, FileStream for large payload assertion
     }
 
     @Test
